@@ -85,8 +85,9 @@
     let intervalo;
     /*______________________________________________________*/
     let barajearCartas = (ids, cartas) => {
+        /*aqui se le asigna un vindice random a las cartas*/
     let cartasBarajadas = cartas.sort(() => Math.random() - 0.5);
-
+        /*creamos un array de objetos carta para hacer sus valores mas accesibles que con un dos arrays distintos*/
     return ids.map((id, i) => ({
         id: id,
         src: cartasBarajadas[i]
@@ -97,6 +98,7 @@ let cartasMapa = barajearCartas(ids, cartas);
 console.log(cartasMapa);
 
     let verificar=()=>{
+        /*si todas las volteadas tienen el mismo src que la primera, aunque pude haberlo hecho mas intuitivo*/
         if(volteadas.every(c=>c.src===volteadas[0].src)){
             puntos++
             puntuacion.innerHTML=puntos
@@ -105,15 +107,18 @@ console.log(cartasMapa);
                 carta.style.border="green 4px solid"
                 carta.removeEventListener("click", voltear)
             })
+            /*Si los puntos llegan a 4, has ganado*/
             if (puntos==4){
                 alert("¡Has ganado!")
             }
         }else{
             volteadas.forEach(c=>{
                 let carta=document.getElementById(c.id);
+                /*Se vuelve a poner la imagen de dorso de carta*/
                 carta.src="img/dorso.jpg"
             })
         }
+        /*Volvemos el array vacio otra vez para que pueda volver a recibir otros dos*/
         volteadas=[]
         
         
@@ -124,9 +129,8 @@ console.log(cartasMapa);
             let id=event.target.id
             console.log(id)
 
-            /* let carta=document.getElementById(id) */
             let cartaId = cartasMapa.find(c => c.id === id)
-            /* carta.src=cartas[src] */
+            /*Si la carta ya esta levantada, vuelve para que no se añada a volteadas otra vez*/
             if (volteadas.some(v => v.id === cartaId.id)) return;
             
             event.target.src=cartaId.src

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reto 3</title>
+</head>
+<body>
+    <fieldset>
+        <legend>Validar transacción</legend>
+
+        <div>
+            <label for="datetime">Fecha y hora de creación:</label>
+            <input type="text" id="datetime" placeholder="“dd/mm/aaaa hh:mm”">
+            <span class="error"></span><br>
+            <button id="b1">Validar</button>
+            <hr>
+        </div>
+
+        <div>
+            <label for="cooker">Cocinero:</label>
+            <input type="text" id="cooker" placeholder="ej. WW$1234">
+            <span class="error"></span><br>
+            <button id="b2">Validar</button>
+            <p><i>dos letras mayúsculas, símbolo, y cuatro dígitos</i></p>
+            <hr>
+        </div>
+
+        <div>
+            <label for="address">Destinatario:</label>
+            <input type="text" id="address" placeholder="ej. NM_alburquerque:1234">
+            <span class="error"></span><br>
+            <p><i>dos o tres letras mayúsculas, guión bajo, ciudad en minúsculas, dos puntos, y código de distrito de 4 dígitos</i></p>
+            <button id="b3">Validar</button>
+            <hr>
+        </div>
+
+        <div>
+            <label for="grs">Gramos:</label>
+            <input type="text" id="grs" placeholder="1000-5000">
+            <span class="error"></span><br>
+            <button id="b4">Validar</button>
+            <hr>
+        </div>
+
+        <div>
+            <label for="comp">Composición:</label>
+            <input type="text" id="comp" placeholder="ej. 200gC3OH7">
+            <span class="error"></span><br>
+            <p><i>Estará formado por una cantidad en gramos seguida de dos conjuntos de una o dos letras seguidas o no de un número. </i></p>
+            <button id="b5">Validar</button>
+            <hr>
+        </div>
+
+        <div>
+            <label for="bank">Número de cuenta de EEUU:</label>
+            <input type="text" id="bank" placeholder="ej.AA01-123400120000-10">
+            <span class="error"></span><br>
+            <button id="b6">Validar</button><br>
+            <ol>Formato:
+                <li><i>Dos letras: suponemos que el valor de cada letra es del 1 al 26 (no hay ñ ni ll).</i></li>
+
+                <li><i>Dos dígitos: debe corresponderse con la suma de la primera letra y la segunda: en caso de que sea menor que 10 se pone el 0 delante.</i></li>
+
+                <li><i>Un guión</i></li>
+
+                <li><i>Doce dígitos de cuenta</i></li>
+
+                <li><i>Un guión</i></li>
+
+                <li><i>Dos dígitos de control: los dos primeros deben ser la suma de los 6 primeros dígitos de la cuenta dividido entre 6 y extrayendo solamente su parte entera; y los dos últimos exactamente igual, pero con los 6 siguientes</i></li>
+
+                <li><i>Si el número está correcto se colocará en un campo de texto al lado del anterior, pero sin guiones: solamente los números y las letras</i></li>
+
+            </ol>
+            <hr>
+        </div>
+
+         
+
+    </fieldset>
+</body>
+</html>
