@@ -87,7 +87,10 @@
         let error=document.querySelector('#datetime + span.error')
         if(!pattern.test(Fecha)|Fecha===''){
             error.textContent="❌"
+            return
         }
+        error.textContent="✅"
+        
     }
 
     let validarcooker=()=>{
@@ -96,7 +99,9 @@
         let error=document.querySelector('#cooker + span.error')
         if(!pattern.test(cooker)|cooker===''){
             error.textContent="❌"
+            return;
         }
+        error.textContent="✅"
     }
 
     let validarAdress=()=>{
@@ -105,7 +110,9 @@
         let error=document.querySelector('#address + span.error')
         if(!pattern.test(address)|address===''){
             error.textContent="❌"
+            return;
         }
+        error.textContent="✅"
     }
 
     let validarGrs=()=>{
@@ -114,7 +121,10 @@
         let error=document.querySelector('#grs + span.error')
         if(!pattern.test(grs)|grs===''){
             error.textContent="❌"
+            return;
         }
+        error.textContent="✅"
+        
     }
 
     let validarComp=()=>{
@@ -123,7 +133,9 @@
         let error=document.querySelector('#comp + span.error')
         if(!pattern.test(comp)|comp===''){
             error.textContent="❌"
+            return;
         }
+        error.textContent="✅"
     }
 
     let validarBank=()=>{
@@ -134,10 +146,36 @@
             error.textContent="❌"
             return;
         }
+        if(!bank1part(bank[0])){
+            error.textContent="❌ por los primeros numeros"
+            return;
+        }
+        error.textContent="✅"
         
 
 
         
+    }
+    let bank1part=(bank)=>{
+        let abecedario=[
+            'A','B','C','D','E','F',
+            'G','H','I','J','K','L',
+            'M','N','O','P','Q','R',
+            'S','T','U','V','W','X',
+            'Y','Z'
+        ]
+        let letras=bank.slice(0,2)
+        let numeros=parseInt(bank.slice(2,4))
+
+        let index1=abecedario.includes(letras.charAt(0))?abecedario.indexOf(letras.charAt(0))+1:0
+        let index2=abecedario.includes(letras.charAt(1))?abecedario.indexOf(letras.charAt(1))+1:0
+        let num=index1+index2
+        if(num==numeros){
+            return true;
+        }
+
+
+        return false;
     }
 
     document.getElementById("b1").addEventListener("click", validarDatetime)
