@@ -80,4 +80,70 @@
 
     </fieldset>
 </body>
+<script>
+    let validarDatetime=()=>{
+        let pattern=/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}\s[0-9]{2}:[0-9]{2}$/
+        let Fecha=document.getElementById("datetime").value 
+        let error=document.querySelector('#datetime + span.error')
+        if(!pattern.test(Fecha)|Fecha===''){
+            error.textContent="❌"
+        }
+    }
+
+    let validarcooker=()=>{
+        let pattern=/^[A-Z]{2}[^A-za-z\d][0-9]{4}$/
+        let cooker=document.getElementById("cooker").value 
+        let error=document.querySelector('#cooker + span.error')
+        if(!pattern.test(cooker)|cooker===''){
+            error.textContent="❌"
+        }
+    }
+
+    let validarAdress=()=>{
+        let pattern=/^[A-Z]{2}_[a-z]+:[1-9]{4}$/
+        let address=document.getElementById("address").value 
+        let error=document.querySelector('#address + span.error')
+        if(!pattern.test(address)|address===''){
+            error.textContent="❌"
+        }
+    }
+
+    let validarGrs=()=>{
+        let pattern=/^[1-4]\d{3}$|5000/
+        let grs=document.getElementById("grs").value 
+        let error=document.querySelector('#grs + span.error')
+        if(!pattern.test(grs)|grs===''){
+            error.textContent="❌"
+        }
+    }
+
+    let validarComp=()=>{
+        let pattern=/^[1-9]\d+g\w{1,2}\d?\w{1,2}\d?$/
+        let comp=document.getElementById("comp").value 
+        let error=document.querySelector('#comp + span.error')
+        if(!pattern.test(comp)|comp===''){
+            error.textContent="❌"
+        }
+    }
+
+    let validarBank=()=>{
+        let pattern=/^[^ñÑ1-9]{2}\d{2}-\d{12}-\d{2}$/
+        let bank=document.getElementById("bank").value 
+        let error=document.querySelector('#bank + span.error')
+        if(!pattern.test(bank)|bank===''){
+            error.textContent="❌"
+            return;
+        }
+        
+
+        
+    }
+
+    document.getElementById("b1").addEventListener("click", validarDatetime)
+    document.getElementById("b2").addEventListener("click", validarcooker)
+    document.getElementById("b3").addEventListener("click", validarAdress)
+    document.getElementById("b4").addEventListener("click", validarGrs)
+    document.getElementById("b5").addEventListener("click", validarComp)
+    document.getElementById("b6").addEventListener("click", validarBank)
+</script>
 </html>
