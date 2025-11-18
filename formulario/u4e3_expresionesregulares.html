@@ -4,8 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reto 3</title>
+    <style>
+        body{
+            font-size: 0.8em;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(90deg, rgb(84, 229, 255), rgb(46, 137, 255));
+        }
+        #check{
+            padding: 1em;
+        }
+        fieldset{
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2em;
+            background-color: white;
+            margin: auto;
+            width: 50%;
+            border-radius: 10px;
+
+        }
+
+        legend{
+            background-color: white;
+            border: 1px solid lightgray;
+            padding: 1em;
+            border-radius: 10px;
+        }
+        #checkall{
+            margin: auto;
+            margin-top: 1em;
+            margin-bottom: 2em;
+            padding: 1em;
+            background:linear-gradient(90deg, rgb(53, 143, 35), rgb(7, 110, 7));
+        }
+        label{
+            font-weight: bold;
+        }
+        button{
+            margin: 1em;
+            padding: 0.5em;
+            width: 15%;
+            color: white;
+            background:linear-gradient(90deg, rgb(20, 169, 228), rgb(26, 109, 218));
+            border-radius: 5px;
+            border: solid 1px gray;
+        }
+        input{
+            height: 1.5em;
+            
+        }
+        button:hover{
+            cursor: pointer;
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body>
+    <p id="check"></p>
     <fieldset>
         <legend>Validar transacción</legend>
 
@@ -76,20 +136,22 @@
             <hr>
         </div>
 
-         
-
     </fieldset>
+    <!--Por gusto he decidido añadir un botón que lo compruebe todo-->
+    <button id="checkall">Validar todo</button>
 </body>
 <script>
+    //Hasta la parte del numero del banco es todo sencillo, tan solo testear un patrón
     let validarDatetime=()=>{
         let pattern=/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}\s[0-9]{2}:[0-9]{2}$/
         let Fecha=document.getElementById("datetime").value 
         let error=document.querySelector('#datetime + span.error')
         if(!pattern.test(Fecha)|Fecha===''){
             error.textContent="❌"
-            return
+            return false
         }
         error.textContent="✅"
+        return true
         
     }
 
@@ -99,9 +161,10 @@
         let error=document.querySelector('#cooker + span.error')
         if(!pattern.test(cooker)|cooker===''){
             error.textContent="❌"
-            return;
+            return false;
         }
         error.textContent="✅"
+        return true
     }
 
     let validarAdress=()=>{
@@ -110,9 +173,10 @@
         let error=document.querySelector('#address + span.error')
         if(!pattern.test(address)|address===''){
             error.textContent="❌"
-            return;
+            return false;
         }
         error.textContent="✅"
+        return true
     }
 
     let validarGrs=()=>{
@@ -121,10 +185,10 @@
         let error=document.querySelector('#grs + span.error')
         if(!pattern.test(grs)|grs===''){
             error.textContent="❌"
-            return;
+            return false;
         }
         error.textContent="✅"
-        
+        return true
     }
 
     let validarComp=()=>{
@@ -133,9 +197,10 @@
         let error=document.querySelector('#comp + span.error')
         if(!pattern.test(comp)|comp===''){
             error.textContent="❌"
-            return;
+            return false;
         }
         error.textContent="✅"
+        return true
     }
 
     let validarBank=()=>{
@@ -144,13 +209,21 @@
         let error=document.querySelector('#bank + span.error')
         if(!pattern.test(bank)|bank===''){
             error.textContent="❌"
-            return;
+            return false;
         }
+        //si lo separo antes, da error el pattern
+        bank=bank.split("-")
         if(!bank1part(bank[0])){
             error.textContent="❌ por los primeros numeros"
-            return;
+            return false;
         }
-        error.textContent="✅"
+
+        if(!bank2part(bank[1],bank[2])){
+            error.textContent="❌ por los digitos de control"
+            return false;
+        }
+        error.textContent=`✅ ${bank[0].toUpperCase()}${bank[1]}${bank[2]}`
+        return true
         
 
 
@@ -164,25 +237,74 @@
             'S','T','U','V','W','X',
             'Y','Z'
         ]
-        let letras=bank.slice(0,2)
+        let letras=bank.slice(0,2).toUpperCase()
+        console.log(letras)
         let numeros=parseInt(bank.slice(2,4))
-
+        console.log(numeros)
+//Extraigo los dos indices de abecedario correspondientes a las letras. he consultado ChatGpt por errores de sintaxis, aunque no me ha sido de ayuda
         let index1=abecedario.includes(letras.charAt(0))?abecedario.indexOf(letras.charAt(0))+1:0
-        let index2=abecedario.includes(letras.charAt(1))?abecedario.indexOf(letras.charAt(1))+1:0
+        let index2=abecedario.includes(letras.charAt(1))?parseInt(abecedario.indexOf(letras.charAt(1))+1):0
         let num=index1+index2
         if(num==numeros){
             return true;
         }
-
-
         return false;
     }
 
+    let bank2part=(bank,cont)=>{
+        /*El proceso es: separo 6 digitos, convierto a arraycon split,
+        lo recorro reduciendo a la suma pero convirtiendo cada valor en int.
+        */
+        let slice1=bank.slice(0,6).split('')
+        let part1=slice1.reduce((acc,i)=>acc+parseInt(i),0)
+        console.log(part1)
+
+        let slice2=bank.slice(6,13).split('')
+        let part2=slice2.reduce((acc,i)=>acc+parseInt(i),0)
+        console.log(part2)
+
+        //Estraigo los numeros finales de control
+        let control1=cont.charAt(0)
+        let control2=cont.charAt(1)
+
+        //hago la comprobación
+        if((Math.trunc(part1/6))==control1&&
+            (Math.trunc(part2/6))==control2){
+                return true
+            }
+
+        return false
+
+    }
+
+    //Añado los eventos a los botones
     document.getElementById("b1").addEventListener("click", validarDatetime)
     document.getElementById("b2").addEventListener("click", validarcooker)
     document.getElementById("b3").addEventListener("click", validarAdress)
     document.getElementById("b4").addEventListener("click", validarGrs)
     document.getElementById("b5").addEventListener("click", validarComp)
     document.getElementById("b6").addEventListener("click", validarBank)
+
+    //Este es el evento de comprobación total
+    document.getElementById("checkall").addEventListener("click",()=>{
+        let check=document.getElementById("check")
+        check.innerHTML=''
+        if(validarDatetime() &&
+        validarcooker() &&
+        validarAdress() &&
+        validarGrs() &&
+        validarComp() &&
+        validarBank()){
+            //añade un mensaje arriba de error o éxtito
+            check.innerHTML='Todos los campos estan correctamente completados'
+            check.style.background='lightgreen'
+            return true
+        }else{
+            check.innerHTML='Algunos campos estan incorrectamente completados'
+            check.style.background='lightcoral'
+            return false
+
+        }
+    })
 </script>
 </html>
