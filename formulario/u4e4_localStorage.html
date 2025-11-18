@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reto 2</title>
+    <style>
+        #contadores{
+            border: solid 1px gray;
+            position: fixed;
+            width: 100px;
+            top: 1em;
+            right: 1em;
+            padding: 1em;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="contadores">
+        <p>forfaits: <span id="forfaits"></span></p>
+        <p>Socios: <span id="socios"></span></p>
+        <button id="reset">reset</button>
+    </div>
+    <fieldset>
+        <legend>Formulario</legend>
+        <!--Escribo aqui los require-->
+        <form novalidate>
+            <div>
+                <label for="id">Identificador:</label>
+                <input id="id" name="id" required placeholder="Identificador">
+                <span class="error"></span><br>
+
+            </div>
+
+            <div>
+                <label for="nombre">nombre</label>
+                <input id="nombre" name="nombre" required maxlength="50" placeholder="Nombre y apellidos">
+                <span class="error"></span><br>
+            </div>
+
+            <div>
+                <label for="fecha">Fecha:</label>
+                <input id="fecha" name="fecha" required placeholder="dd/mm/yyyy">
+                <span class="error"></span><br>
+            </div>
+
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="E-mail">
+                <span class="error"></span><br>
+            </div>
+
+            <div>
+                <label for="telefono">Teléfono</label>
+                <input id="telefono" name="telefono" placeholder="telefono">
+                <span class="error"></span><br>
+            </div>
+
+            <div>
+                <label for="edad">Edad:</label>
+                <select id="edad" name="edad">
+                    <option value="nino">niño</option>
+                    <option value="adulto">adulto</option>
+                    <option value="jubilado">jubilado</option>
+                </select>
+                <span class="error"></span><br>
+            </div>
+
+            <hr>
+
+            <div>
+                <input type="checkbox" name="ski" id="ski">Club de esquí
+                <span class="error"></span><br>
+            </div>
+            <div>
+                <label for="experiencia">Cuentanos tu experiencia:</label><br>
+                <textarea name="experiencia" id="exp" disabled></textarea>
+            </div>
+
+            <button type="submit">Enviar</button><br>
+        </form>
+    </fieldset>
+
+</body>
+<script src="js/reto4.js"></script>
+</html>
