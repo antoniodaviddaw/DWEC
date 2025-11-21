@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reto 5</title>
+    <style>
+        body{
+            background-color: lightpink;
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            text-align: center;
+        }
+        .contenedor-personajes{
+            margin: auto;
+            width: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 1em;
+
+        }
+        .pers{
+            width: 15%;
+            filter: brightness(0.15);
+            transform: scale(1);
+            transition: filter ease-in-out 0.5s, transform ease-in-out 0.5s;
+
+        }
+        .logo{
+            height: 10%;
+            margin: auto;
+            margin-bottom: 2em;
+            margin-top: 1em;
+        }
+        .panel-info{
+            margin: auto;
+            height: 30%;
+            width: 60%;
+            background-color: orange;
+            border: solid 2px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            margin-top: 2em;
+        }
+        .panel-info div{
+            background-color: antiquewhite;
+            width: 95%;
+            height: 85%;
+            margin-left: 20px;
+            margin-right: 20px;
+            border-radius: 10px;
+            border: solid 2px;
+            
+
+        }
+        .botones{
+            margin-top: 2em;
+        }
+        .botones button{
+            padding: 1em;
+            border-radius: 5px;
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+    </style>
+</head>
+<body>
+    <img src="img/logo.png" class="logo">
+    <div class="contenedor-personajes">
+
+        <img src="img/bart.png" alt="" 
+             class="pers escuela familia"
+             data-nombre="Bart Simpson"
+             data-descripcion="Hijo travieso de la familia Simpson. Estudia en la Escuela de Springfield.">
+
+        <img src="img/homer.png" alt="" 
+             class="pers central bar familia"
+             data-nombre="Homer Simpson"
+             data-descripcion="Padre de familia y trabajador de la central nuclear. A menudo visita el bar de Moe.">
+
+        <img src="img/barney.png" alt="" 
+             class="pers bar"
+             data-nombre="Barney Gumble"
+             data-descripcion="Amigo de Homer, habitual del bar de Moe y conocido por su afición a la cerveza.">
+
+        <img src="img/burns.png" alt="" 
+             class="pers central"
+             data-nombre="Montgomery Burns"
+             data-descripcion="Dueño de la central nuclear de Springfield. Avaricioso y despiadado.">
+
+        <img src="img/krusty.png" alt="" 
+             class="pers"
+             data-nombre="Krusty el Payaso"
+             data-descripcion="Payaso famoso de la televisión y presentador del programa infantil.">
+
+        <img src="img/lenny.png" alt="" 
+             class="pers central bar"
+             data-nombre="Lenny Leonard"
+             data-descripcion="Compañero de trabajo de Homer en la central y cliente frecuente del bar de Moe.">
+
+        <img src="img/lisa.png" alt="" 
+             class="pers familia escuela"
+             data-nombre="Lisa Simpson"
+             data-descripcion="Hija inteligente y aplicada de la familia Simpson. Alumna destacada de la Escuela de Springfield.">
+
+        <img src="img/maggie.png" alt="" 
+             class="pers familia"
+             data-nombre="Maggie Simpson"
+             data-descripcion="La bebé de los Simpson. Pacífica, silenciosa y siempre con su chupete.">
+
+        <img src="img/marge.png" alt="" 
+             class="pers familia"
+             data-nombre="Marge Simpson"
+             data-descripcion="Madre de familia, responsable y paciente. Suele mantener el orden en casa.">
+
+        <img src="img/moe.png" alt="" 
+             class="pers bar"
+             data-nombre="Moe Szyslak"
+             data-descripcion="Propietario del bar de Moe. Cascarrabias pero muy leal a sus amigos.">
+
+        <img src="img/nelson.png" alt="" 
+             class="pers escuela"
+             data-nombre="Nelson Muntz"
+             data-descripcion="Compañero de Bart en la escuela. Conocido por ser el matón del colegio.">
+
+        <img src="img/smithers.png" alt="" 
+             class="pers central"
+             data-nombre="Waylon Smithers"
+             data-descripcion="Asistente personal del Sr. Burns. Leal, ordenado y muy dedicado a su jefe.">
+
+    </div>
+
+    <div class="botones">
+        <button id="familia">Familia Simpson</button>
+        <button id="escuela">Escuela</button>
+        <button id="central">Central Nuclear</button>
+    </div>
+
+    <div class="panel-info">
+        <div>
+            <h1 id="nombre"></h1>
+            <p id="texto"></p>
+        </div>
+    </div>
+</body>
+
+<script>
+    nombretext=document.getElementById("nombre")
+    descripciontext=document.getElementById("texto")
+    /*BOTONES
+    Soy consciente de mi falta de optimizacion, trataré de mejorarlo creando métodos*/
+    //BOTON FAMILIA
+    document.getElementById("familia").addEventListener("click",()=>{
+        todos=document.querySelectorAll(".pers")
+        todos=Array.from(todos)
+        todos.forEach(p=>{p.style.filter="brightness(0.15)";
+            p.style.transform="scale(0.9)"
+        })
+
+        nombretext.innerText="Familia Simpson"
+        descripciontext.innerText="Todos los miembros de la familia Simpson"
+
+        elementos=document.getElementsByClassName("familia")
+        personajes=Array.from(elementos)
+        console.log(personajes)
+        personajes.forEach(p => {
+            p.style.filter='none';
+            p.style.transform="scale(1.1)"
+        })
+    })
+
+    //BOTON ESCUELA
+    document.getElementById("escuela").addEventListener("click",()=>{
+        todos=document.querySelectorAll(".pers")
+        todos=Array.from(todos)
+        todos.forEach(p=>{p.style.filter="brightness(0.15)"
+            p.style.transform="scale(0.9)"}
+        )
+
+        nombretext.innerText="Escuela de Springfield"
+        descripciontext.innerText="Todos los miembros de la escuela de Springfield"
+
+        elementos=document.getElementsByClassName("escuela")
+        personajes=Array.from(elementos)
+        console.log(personajes)
+        personajes.forEach(p => {
+            p.style.filter='none'
+            p.style.transform="scale(1.1)"
+        })
+    })
+
+    //BOTON CENTRAL NUCLEAR
+    document.getElementById("central").addEventListener("click",()=>{
+        todos=document.querySelectorAll(".pers")
+        todos=Array.from(todos)
+        todos.forEach(p=>{p.style.filter="brightness(0.15)";
+            p.style.transform="scale(0.9)"}
+        )
+
+        nombretext.innerText="Central nuclear"
+        descripciontext.innerText="Todos los trabajadores de la central nuclear de Springfield"
+
+        elementos=document.getElementsByClassName("central")
+        personajes=Array.from(elementos)
+        console.log(personajes)
+        personajes.forEach(p => {
+            p.style.filter='none'
+            p.style.transform="scale(1.1)"
+        })
+    })
+
+    let oscurecer=()=>{
+        //funcion para oscurecer todos los personajes cuando el raton esta sobre uno
+        document.querySelectorAll(".pers").forEach(p=>{
+            p.style.filter="brightness(0.15)";
+            p.style.transform="scale(0.9)"
+        })
+    }
+
+    //MOSTRAR LOS DATASETS POR PERSONAJE AL PASAR EL RATON POR ENCIMA
+    document.querySelectorAll(".pers").forEach(p=>{
+        p.addEventListener("mouseover",()=>{
+            oscurecer()
+            p.style.filter='none'
+            p.style.transform="scale(1.1)"
+
+            /*La opcion de dataset si tuve que buscarlo porque no sabia cómo hacerlo*/
+            nombretext.innerText=p.dataset.nombre
+            descripciontext.innerText=p.dataset.descripcion
+        })
+    })
+</script>
+</html>
