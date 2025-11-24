@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            width: 100vw;
+            height: 100vh;
+            background-color: lightgrey;
+        }
+        p{
+            margin: auto;
+            width: 40%;
+        }
+        #cartas{
+            margin: auto;
+            width: 60%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+        }
+        img{
+            width: 20%;
+            margin: 1em;
+            border-radius: 20px;
+        }
+        img:active{
+            transition: 0.1s;
+            transform: rotate(365deg);
+
+    }
+    </style>
+</head>
+<body>
+    <h1>Juego de cartas</h1>
+    <p>Busca las parejas de cartas.
+        Haz click en una carta y después en otra.
+        Espera 1 segundo para comprobar.
+        Al llegar a 4 puntos, habrás ganado
+    </p>
+    <div id="cartas">
+        <img id="c1" src="img/dorso.jpg">
+        <img id="c2" src="img/dorso.jpg">
+        <img id="c3" src="img/dorso.jpg">
+        <img id="c4" src="img/dorso.jpg">
+        <img id="c5" src="img/dorso.jpg">
+        <img id="c6" src="img/dorso.jpg">
+        <img id="c7" src="img/dorso.jpg">
+        <img id="c8" src="img/dorso.jpg">
+    </div>
+    <div>
+        <h3>Puntuación: <span id="puntos"></span></h3>
+    </div>
+    
+</body>
+<script>
+    let cartas=[
+        "img/bastos.jpg",
+        "img/bastos.jpg",
+        "img/copas.jpg",
+        "img/copas.jpg",
+        "img/oros.jpg",
+        "img/oros.jpg",
+        "img/espadas.jpg",
+        "img/espadas.jpg",
+    ]
+    let ids=[
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7",
+        "c8",
+    ]
+    let volteadas=[]
+    let puntos=0
+    let puntuacion=document.getElementById("puntos")
+    let intervalo;
+    /*______________________________________________________*/
+    let barajearCartas = (ids, cartas) => {
+        /*aqui se le asigna un vindice random a las cartas*/
+    let cartasBarajadas = cartas.sort(() => Math.random() - 0.5);
+        /*creamos un array de objetos carta para hacer sus valores mas accesibles que con un dos arrays distintos*/
+    return ids.map((id, i) => ({
+        id: id,
+        src: cartasBarajadas[i]
+    }));
+}
+
+let cartasMapa = barajearCartas(ids, cartas);
+console.log(cartasMapa);
+
+    let verificar=()=>{
+        /*si todas las volteadas tienen el mismo src que la primera, aunque pude haberlo hecho mas intuitivo*/
+        if(volteadas.every(c=>c.src===volteadas[0].src)){
+            puntos++
+            puntuacion.innerHTML=puntos
+            volteadas.forEach(c=>{
+                let carta=document.getElementById(c.id);
+                carta.style.border="green 4px solid"
+                carta.removeEventListener("click", voltear)
+            })
+            /*Si los puntos llegan a 4, has ganado*/
+            if (puntos==4){
+                alert("¡Has ganado!")
+            }
+        }else{
+            volteadas.forEach(c=>{
+                let carta=document.getElementById(c.id);
+                /*Se vuelve a poner la imagen de dorso de carta*/
+                carta.src="img/dorso.jpg"
+            })
+        }
+        /*Volvemos el array vacio otra vez para que pueda volver a recibir otros dos*/
+        volteadas=[]
+        
+        
+    }
+
+    let voltear=(event)=>{
+        if(volteadas.length<2){
+            let id=event.target.id
+            console.log(id)
+
+            let cartaId = cartasMapa.find(c => c.id === id)
+            /*Si la carta ya esta levantada, vuelve para que no se añada a volteadas otra vez*/
+            if (volteadas.some(v => v.id === cartaId.id)) return;
+            
+            event.target.src=cartaId.src
+
+            volteadas.push(cartaId)
+            
+
+
+            console.log(volteadas)
+            if(volteadas.length==2){
+                intervalo=setTimeout(verificar,1000)
+            }
+            
+
+        }
+
+    }
+    
+
+    document.getElementById("c1").addEventListener("click",voltear)
+    document.getElementById("c2").addEventListener("click",voltear)
+    document.getElementById("c3").addEventListener("click",voltear)
+    document.getElementById("c4").addEventListener("click",voltear)
+    document.getElementById("c5").addEventListener("click",voltear)
+    document.getElementById("c6").addEventListener("click",voltear)
+    document.getElementById("c7").addEventListener("click",voltear)
+    document.getElementById("c8").addEventListener("click",voltear)
+
+    
+
+
+</script>
+</html>
