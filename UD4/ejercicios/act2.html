@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>actividad 1</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>UNIDAD 4</h1>
+        </nav>
+        <div><h3>Ejercicio 2</h3></div>
+    </header>
+    <main>
+        <div>
+            <h2>Cambio de color</h2>
+        </div>
+        <p>Haz doble click para cambiar el color del main</p>
+        
+        
+    </main>
+    <aside>
+
+    </aside>
+    
+    
+</body>
+<script>
+    window.addEventListener("dblclick",(event)=>{
+        //Los tonos van de 0 a 255 en rgb
+        let rgb1=Math.random()*255
+        let rgb2=Math.random()*255
+        let rgb3=Math.random()*255
+
+        main=document.querySelector("main")
+
+        console.log(main)
+        main.style.backgroundColor=`rgb(${rgb1},${rgb2},${rgb3})`
+        
+    })
+</script>
+
+</html>

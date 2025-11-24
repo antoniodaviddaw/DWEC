@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>actividad 1</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <style>
+       
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>UNIDAD 4</h1>
+        </nav>
+        <div><h3>Ejercicio 3</h3></div>
+    </header>
+    <main>
+        <div>
+            <h2>Nuevo número aleatorio</h2>
+        </div>
+        <p>Haz click en el botón para añadir nuevo número a la lista</p>
+        <button id="boton">Añadir nuevo número</button>
+        <button id="borrar">Borrar último número</button>
+        <div id="lista-div">
+            <ul id="lista">
+
+            </ul>
+        </div>
+        
+        
+    </main>
+    <aside>
+
+    </aside>
+    
+    
+</body>
+<script>
+    let numeros=[]
+    let numero;
+    lista=document.getElementById("lista")
+    let escribir=()=>{
+        lista.innerHTML=""
+        numeros.forEach(n=>{
+            lista.innerHTML+=`<li>${n}</li>`
+        })
+
+    }
+
+document.getElementById("boton").addEventListener("click",(event)=>{
+    
+    numero=Math.floor((Math.random()*100)+1)
+    numeros.push(numero)
+    escribir()
+
+
+})
+
+document.getElementById("borrar").addEventListener("click",(event)=>{
+    
+    
+    numeros.pop()
+    escribir()
+
+
+})
+
+
+</script>
+
+</html>

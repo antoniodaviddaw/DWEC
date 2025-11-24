@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>actividad 1</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>UNIDAD 4</h1>
+        </nav>
+        <div><h3>Ejercicio 1</h3></div>
+    </header>
+    <main>
+        <div>
+            <h2>Coordenadas del mouse</h2>
+        </div>
+        <p>El mouse se encuentra en las cordenadas:</p>
+        <label>X</label><input id="x" readonly><br>
+        <label>y</label><input id="y" readonly><br>
+        <div id="coordenadas-guardadas">
+
+        </div>
+        
+    </main>
+    <aside>
+
+    </aside>
+    
+    
+</body>
+<script>
+    let mousex=0;
+    let mousey=0;
+    window.addEventListener("mousemove",(event)=>{
+        mousex=event.clientX;
+        mousey=event.clientY;
+        inputx=document.getElementById("x")
+        inputx.value=mousex
+
+        inputy=document.getElementById("y")
+
+        inputy.value=mousey
+
+
+
+    })
+    window.addEventListener("keypress",(event)=>{
+        console.log(event.key)
+        if(event.key=="Enter"){
+            div=document.getElementById("coordenadas-guardadas")
+            div.innerHTML+=`<p>Coordenadas x:${mousex}, y:${mousey}</p>`
+        }
+    })
+
+</script>
+
+</html>
