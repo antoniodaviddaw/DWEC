@@ -14,13 +14,13 @@
         <nav>
             <h1>UNIDAD 4</h1>
         </nav>
-        <div><h3>Ejercicio 3</h3></div>
+        <div><h3>Ejercicio 5</h3></div>
     </header>
     <main>
         <div>
-            <h2>Nuevo número aleatorio</h2>
+            <h2>Marcar checkboxes</h2>
         </div>
-        <p>Haz click en el botón para añadir nuevo número a la lista</p>
+        <p>Puedes marcar todos los checkboxes o deseleccionarlos todos con un botón</p>
         <button id="boton">Marcar todos</button>
         <button id="borrar">Desmarcar todos</button>
         <div id="lista-div">
@@ -37,40 +37,7 @@
     
     
 </body>
-<script>
-    let checkboxes=[]
-    lista=document.getElementById("lista")
-    let escribir=()=>{
-        lista.innerHTML=""
-        for(let i=0;i<100;i++){
-            let checkbox=document.createElement("input")
-            checkbox.type="checkbox"
-            let label=document.createElement("label")
-            let number=Math.floor(Math.random()*100)
-            label.innerHTML=number
-            label.id=number
-            checkbox.id=number
-            let li=document.createElement("li")
-            li.appendChild(checkbox)
-            li.appendChild(label)
-            lista.appendChild(li)
-
-        }
-            
-
-    }
-    escribir()
-
-    document.getElementById("boton").addEventListener("click",(event)=>{
-        checkboxes=document.querySelectorAll("input[type=checkbox]")
-        checkboxes.forEach(c=>c.checked=true)
-    })
-
-    document.getElementById("borrar").addEventListener("click",(event)=>{
-        checkboxes=document.querySelectorAll("input[type=checkbox]")
-        checkboxes.forEach(c=>c.checked=false)
-    })
-
+<script src="js/act5.js">
 </script>
 
 </html>
