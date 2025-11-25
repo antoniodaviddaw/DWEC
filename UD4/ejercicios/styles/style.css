@@ -39,6 +39,7 @@ body{
             /* height: 50px; */ 
         }
         main{
+            overflow: auto;
             padding: 1em;
             grid-area: main;
             background-color: white;
@@ -87,4 +88,17 @@ body{
         }
         input[type="checkbox"]{
            
+        }
+        td{
+            background-color: lightblue;
+            text-align: center;
+            width: 1em;
+            padding: 1em;
+            border-radius: 5px;
+        }
+        table{
+            margin-top: 1em;
+            overflow: scroll;
+            margin: auto;
+            width: 90%;
         }
