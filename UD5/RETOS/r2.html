@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reto 2</title>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+            background-color: rgb(37, 37, 37);
+        }
+        h1{
+            color: rgb(192, 255, 141);
+            text-align: center;
+            font-size: 5em;
+            margin: auto;
+            text-shadow: 4px 4px 8px rgba(0, 255, 0, 0.767);
+        }
+        #inputs{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            justify-content: center;
+        }
+        label{
+            margin: auto;
+            text-align: center;
+            width: 30%;
+            padding: 1em;
+            
+        }
+        input{
+            width: 40%;
+            margin: auto;
+            text-align: center;
+            padding: 1em;
+            
+        }
+        .card{
+            color: white;
+            background-color: rgb(66, 66, 66);
+            box-sizing: border-box;
+            border: solid 4px rgb(54, 255, 54);
+            width: 300px;
+            height: 500px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 0px 8px 8px rgba(0, 255, 0, 0.767);
+        }
+        .card img{
+            height: 60%;
+            width: 100%;
+            object-fit: cover;
+        }
+        .card div{
+            padding: 1em;
+
+        }
+        .card:hover{
+            transform: scale(1.05);
+        }
+        #peliculas{
+            margin: auto;
+            width: 80%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 2em;
+            padding: 2em;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>VideoClub</h1>
+    <div id="inputs">
+        <label for="peli">Busca una película:</label><br>
+        <input type="text" id="peli" placeholder="Escribe una película">
+    </div>
+    
+    <!-- <button onclick="paises()">Cargar paises</button> -->
+    
+        <div id="peliculas">
+
+        </div>
+
+
+    
+</body>
+<script>
+    let apiKey="5a0140ae"
+    let page=1
+    let totalResults;
+    let peliculas=[]
+    let listadoPeliculas=document.getElementById("peliculas")
+
+    let listaPeliculas= async ()=>{
+        try{
+            let response=await fetch(`https://www.omdbapi.com/?s=movie&y=2024&page=${page}&apikey=${apiKey}`)
+            let data=await response.json()
+            
+            totalResults=data.totalResults
+            let totalPages=Math.ceil(totalResults/10)
+
+            if(!response.ok){
+                throw new Error("API error "+"respuesta no encontrada")
+            }
+
+            for(let i=1;i<=totalPages;i++){
+                response=await fetch(`https://www.omdbapi.com/?s=movie&y=2024&page=${i}&apikey=${apiKey}`)
+                data=await response.json()
+                peliculas.push(...data.Search)
+            }
+            console.log(peliculas)
+            escribirPeliculas(peliculas)
+        } catch (error) {
+            console.error("Error general:", error);
+        }
+    }
+    listaPeliculas()
+
+    /*
+    
+Poster
+: 
+"https://m.media-amazon.com/images/M/MV5BYjY2NDZhN2EtZmYwNS00NDU2LThiODAtNmY4OWY2ODNmZWRmXkEyXkFqcGc@._V1_SX300.jpg"
+Title
+: 
+"The Garfield Movie"
+Type
+: 
+"movie"
+Year
+: 
+"2024"
+imdbID
+: 
+"tt5779228"
+    */
+
+    let escribirPeliculas=(array)=>{
+        listadoPeliculas.innerHTML=""
+        array.forEach(p=>{
+            let card=document.createElement("div")
+            let imagen=document.createElement("img")
+            imagen.src=p.Poster
+
+            let titulo=document.createElement("h3")
+            titulo.textContent=p.Title
+
+            let ano=document.createElement("p")
+            ano.innerHTML=`Fecha de estreno: ${p.Year}`
+            let texto=document.createElement("div")
+
+            texto.appendChild(titulo)
+            texto.appendChild(ano)
+
+            card.appendChild(imagen)
+            card.appendChild(texto)
+            card.classList="card"
+            listadoPeliculas.appendChild(card)
+
+        })
+    }
+
+    document.getElementById("peli").addEventListener("input",()=>{
+        listadoPeliculas.innerHTML=""
+        let input=document.getElementById("peli").value
+
+        if (input === "") {
+            escribirPeliculas(peliculas);
+            return;
+        }
+
+        let pelisFiltradas=peliculas.filter(p=>
+            p.Title.toLowerCase().includes(input.toLowerCase()))
+        console.log(pelisFiltradas)
+        escribirPeliculas(pelisFiltradas)
+    })
+
+    
+
+
+</script>
+</html>
