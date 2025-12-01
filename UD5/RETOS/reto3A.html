@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador Star Wars</title>
+</head>
+<style>
+    body {
+        min-height: 100vh;
+        color: white;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, rgb(55, 55, 58), rgb(41, 41, 44));
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 4em;
+    }
+    form {
+        display: flex;
+        justify-content: center;
+        margin: 20px;
+    }
+    label {
+        margin-right: 10px;
+    }
+    input {
+        margin-right: 10px;
+        padding: 5px;
+    }
+    #resultado {
+        text-align: center;
+        margin-top: 20px;
+    }
+    /*AD: color rojo de errores*/
+    .error{
+        color: red;
+    }
+    /*AD: Estilo de la card*/
+    .card{
+        padding: 2em;
+        background-color: rgb(59, 59, 59);
+        color: white;
+        border: solid 2px black;
+        box-shadow: 5px 5px 0px 0px black;
+        border-radius: 5px;
+        width: 200px;
+        min-height: 300px;
+        margin: 1em;
+    }
+    #resultado{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+
+    }
+</style>
+<body>
+    <h1>Buscador Star Wars</h1>
+    <!--AD: añado novalidate-->
+    <form id="formulario" novalidate>
+        <label for="id">ID del personaje:</label>
+        <input type="text" id="id" name="id" required><br>
+        <!--AD: añado un span para errores-->
+        <span class="error"></span><br>
+        <button type="submit">Buscar</button>
+    </form>
+    <div id="resultado"></div>
+</body>
+<script>
+    //AD: Array para personajes:
+    let personajes=[]
+
+    //AD: metodo validacion
+    let validarId=()=>{
+        let pattern=/^\d{1,2}$/
+        let input=document.getElementById("id").value
+        let error=document.querySelector("span.error")
+        error.innerHTML=""
+
+        if(id===null){
+            error.innerHTML="Campo obligatorio"
+            return false
+        }
+
+        if(!pattern.test(input)){
+            error.innerHTML="Id no válido"
+            return false
+        }
+        return input
+
+
+    }
+
+
+
+
+    // Seleccionamos el formulario y el div donde mostraremos los resultados
+    const formulario = document.getElementById('formulario');
+    const resultado = document.getElementById('resultado');
+
+    // Muestra mensajes de error en el contenedor de resultados
+    function mostrarError(mensaje) {
+        resultado.innerHTML = `<p style="color: red;">${mensaje}</p>`;
+    }
+
+    // Muestra la información del personaje (mapea propiedades de la API a español)
+    function mostrarPersonaje(props) {
+        resultado.innerHTML = `
+            <h2>${props.name}</h2>
+            <p><strong>Altura:</strong> ${props.altura} cm</p>
+            <p><strong>Masa:</strong> ${props.masa} kg</p>
+            <p><strong>Género:</strong> ${props.genero}</p>
+            <p><strong>Altura:</strong> ${props.height} cm</p>
+            <p><strong>Masa:</strong> ${props.mass} kg</p>
+            <p><strong>Género:</strong> ${props.gender}</p>
+        `;
+    }
+
+//AD: Hago la funcion de obtener los personajes:
+let obtenerPersonajes= async (id)=>{
+    let response= await fetch(`https://www.swapi.tech/api/people/${id}/`)
+    console.log(response)
+    let data= await response.json()
+    resultado.innerHTML=""
+    
+    let nombre= data.result.properties.name
+    let altura=data.result.properties.height
+    let masa=data.result.properties.mass
+    let genero=data.result.properties.gender
+
+    console.log(data)
+    console.log(nombre)
+    console.log(altura)
+    console.log(masa)
+    console.log(genero)
+
+    let card=document.createElement("div")
+    card.classList="card"
+
+    let h1=document.createElement("h1")
+    h1.innerHTML=nombre
+
+    let p=document.createElement("p")
+    p.innerHTML=`altura: ${altura} cm<br>masa: ${masa} kg<br>género: ${genero}`
+
+    card.appendChild(h1)
+    card.appendChild(p)
+
+    resultado.appendChild(card)
+    
+}
+
+
+    // Manejo del submit del formulario: obtiene el ID y consulta la API
+    formulario.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        //AD: se valida antes de enviar
+        let id=validarId()
+        /* const idInput = document.getElementById('id'); */
+        /* const id = idInput.value.trim(); */
+
+        obtenerPersonajes(id)
+
+        resultado.innerHTML = '<p> Buscando personaje</p>';
+
+       /*  try {
+            const res = await fetch(`https://www.swapi.tech/api/people/${id}`);
+            if (!res.ok) {
+                if (res.status === 404) throw new Error('Personaje no encontrado');
+                throw new Error('Error en la petición');
+            }
+        } catch (err) {
+            mostrarError(`Error: ${err.message}`);
+        } */
+    });
+</script>
+</html>

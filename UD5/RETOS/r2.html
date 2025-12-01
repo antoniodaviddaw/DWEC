@@ -48,6 +48,13 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0px 0px 8px 8px rgba(0, 255, 0, 0.767);
+            animation: enseñar 1s ease alternate;
+            animation-play-state: paused;
+            animation-fill-mode: backwards;
+        }
+        .card:hover{
+            animation-play-state: running;
+             transform: scale(1.05);
         }
         .card img{
             height: 60%;
@@ -58,9 +65,22 @@
             padding: 1em;
 
         }
-        .card:hover{
-            transform: scale(1.05);
+        .card a{
+            font-weight: bold;
+            
+            text-decoration: none;
+            display: block;
+            margin: auto;
+            text-align: center;
+            color: black;
+            font-family: 'Oswald';font-size: 22px;
+            padding: 0.5em;
+            background-color: rgb(255, 217, 0);
+            border-radius: 5px;
         }
+       /*  .card:hover{
+           
+        } */
         #peliculas{
             margin: auto;
             width: 80%;
@@ -70,6 +90,25 @@
             align-items: center;
             gap: 2em;
             padding: 2em;
+        }
+
+        @keyframes enseñar{
+            0%{
+            
+                transform: perspective(800px) rotateX(0deg) scale(1);
+               
+
+            }
+            50%{
+               
+            }
+            100%{
+                z-index: 100;
+                transform: perspective(800px) rotateX(20deg) scale(1.5);
+                box-shadow: 0px 0px 20px 80px rgba(255, 255, 247, 0.767);
+                
+
+            }
         }
 
     </style>
@@ -99,7 +138,7 @@
 
     let listaPeliculas= async ()=>{
         try{
-            let response=await fetch(`https://www.omdbapi.com/?s=movie&y=2024&page=${page}&apikey=${apiKey}`)
+            let response=await fetch(`https://www.omdbapi.com/?s=movie&y=2025&page=${page}&apikey=${apiKey}`)
             let data=await response.json()
             
             totalResults=data.totalResults
@@ -110,7 +149,7 @@
             }
 
             for(let i=1;i<=totalPages;i++){
-                response=await fetch(`https://www.omdbapi.com/?s=movie&y=2024&page=${i}&apikey=${apiKey}`)
+                response=await fetch(`https://www.omdbapi.com/?s=movie&y=2025&page=${i}&apikey=${apiKey}`)
                 data=await response.json()
                 peliculas.push(...data.Search)
             }
@@ -153,10 +192,17 @@ imdbID
 
             let ano=document.createElement("p")
             ano.innerHTML=`Fecha de estreno: ${p.Year}`
+
+            let enlace=document.createElement("a")
+            enlace.href=`https://www.imdb.com/es-es/title/${p.imdbID}`
+            enlace.innerHTML="Enlace a IMDb"
+
+
             let texto=document.createElement("div")
 
             texto.appendChild(titulo)
             texto.appendChild(ano)
+            texto.appendChild(enlace)
 
             card.appendChild(imagen)
             card.appendChild(texto)
