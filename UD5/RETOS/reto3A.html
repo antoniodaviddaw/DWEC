@@ -79,11 +79,11 @@
     //AD: metodo validacion
     let validarId=()=>{
         let pattern=/^\d{1,2}$/
-        let input=document.getElementById("id").value
+        let input=document.getElementById("id").value.trim()
         let error=document.querySelector("span.error")
         error.innerHTML=""
 
-        if(id===null){
+        if(input === ""){
             error.innerHTML="Campo obligatorio"
             return false
         }
@@ -93,8 +93,6 @@
             return false
         }
         return input
-
-
     }
 
 
@@ -124,35 +122,39 @@
 
 //AD: Hago la funcion de obtener los personajes:
 let obtenerPersonajes= async (id)=>{
-    let response= await fetch(`https://www.swapi.tech/api/people/${id}/`)
-    console.log(response)
-    let data= await response.json()
-    resultado.innerHTML=""
-    
-    let nombre= data.result.properties.name
-    let altura=data.result.properties.height
-    let masa=data.result.properties.mass
-    let genero=data.result.properties.gender
+    try {
+        let response= await fetch(`https://www.swapi.tech/api/people/${id}/`)
+        console.log(response)
+        let data= await response.json()
+        resultado.innerHTML=""
+        
+        let nombre= data.result.properties.name
+        let altura=data.result.properties.height
+        let masa=data.result.properties.mass
+        let genero=data.result.properties.gender
 
-    console.log(data)
-    console.log(nombre)
-    console.log(altura)
-    console.log(masa)
-    console.log(genero)
+        console.log(data)
+        console.log(nombre)
+        console.log(altura)
+        console.log(masa)
+        console.log(genero)
 
-    let card=document.createElement("div")
-    card.classList="card"
+        let card=document.createElement("div")
+        card.classList="card"
 
-    let h1=document.createElement("h1")
-    h1.innerHTML=nombre
+        let h1=document.createElement("h1")
+        h1.innerHTML=nombre
 
-    let p=document.createElement("p")
-    p.innerHTML=`altura: ${altura} cm<br>masa: ${masa} kg<br>género: ${genero}`
+        let p=document.createElement("p")
+        p.innerHTML=`altura: ${altura} cm<br>masa: ${masa} kg<br>género: ${genero}`
 
-    card.appendChild(h1)
-    card.appendChild(p)
+        card.appendChild(h1)
+        card.appendChild(p)
 
-    resultado.appendChild(card)
+        resultado.appendChild(card)
+    } catch (err) {
+        mostrarError(`Error: ${err.message}`);
+    } 
     
 }
 
@@ -161,13 +163,13 @@ let obtenerPersonajes= async (id)=>{
     formulario.addEventListener('submit', async (e) => {
         e.preventDefault();
         //AD: se valida antes de enviar
-        let id=validarId()
-        /* const idInput = document.getElementById('id'); */
-        /* const id = idInput.value.trim(); */
+        let id = validarId()
+        if (!id) return; 
 
+        resultado.innerHTML = '<p>Buscando personaje...</p>';
         obtenerPersonajes(id)
 
-        resultado.innerHTML = '<p> Buscando personaje</p>';
+        /* resultado.innerHTML = '<p> Buscando personaje</p>'; */
 
        /*  try {
             const res = await fetch(`https://www.swapi.tech/api/people/${id}`);

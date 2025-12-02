@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reto 3B</title>
+</head>
+<style>
+    body {
+        min-height: 100vh;
+        color: white;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, rgb(55, 55, 58), rgb(41, 41, 44));
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 4em;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 20px;
+    }
+    label {
+        margin-right: 10px;
+    }
+    input {
+        margin-right: 10px;
+        padding: 5px;
+    }
+    #resultado {
+        text-align: center;
+        margin-top: 20px;
+    }
+    /*AD: color rojo de errores*/
+    .error{
+        color: red;
+    }
+    /*AD: Estilo de la card*/
+    .card{
+        padding: 2em;
+        background-color: rgb(59, 59, 59);
+        color: white;
+        border: solid 2px black;
+        box-shadow: 5px 5px 0px 0px black;
+        border-radius: 5px;
+        width: 200px;
+        min-height: 300px;
+        margin: 1em;
+    }
+    #resultado{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+
+    }
+</style>
+<body>
+     <h1>Buscador Star Wars</h1>
+    <!--AD: añado novalidate-->
+    <form id="formulario" novalidate>
+        <div>
+            <label for="tipo">Tipo:</label>
+            <select id="tipo" name="tipo" defaultValue="people">
+                <option value="people">Personaje</option>
+                <option value="films">Película</option>
+                <option value="planets">Planeta</option>
+                <option value="starships">Nave</option>
+                <option value="species">Especie</option>
+
+            </select><br>
+        </div>
+        <div>
+            <label for="id">ID:</label>
+            <input type="text" id="id" name="id" required><br>
+            <span class="error"></span><br>
+        </div>
+
+        <button type="submit" id="boton">Buscar</button>
+    </form>
+    <div id="resultado"></div>
+</body>
+<script src="js/r3B.js">
+    
+</script>
+</html>
